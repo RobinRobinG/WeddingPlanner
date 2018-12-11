@@ -1,0 +1,40 @@
+@model WeddingPlanner.Models.WeddingPlan;
+@{
+    ViewData["Title"] = "Wedding Detail";
+}
+<h1>Wedding of @Model.WedderOne and @Model.WedderTwo on @Model.WeddingDate.ToString("MMM dd, yyyy")</h1>
+<a class="btn btn-success"  href="/create">NEW WEDDING</a>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th>Wedder One</th>
+            <td>@Model.WedderOne</td>
+        </tr>
+        <tr>
+            <th>Wedder Two</th>
+            <td>@Model.WedderTwo</td>
+        </tr>
+        <tr>
+            <th>Wedding Date</th>
+            <td>@Model.WeddingDate</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>@Model.WeddingAddress</td>
+        </tr>
+        <tr>
+            <th>Guests</th>
+            <td>
+                <ul>
+                @{
+                    foreach (var i in @Model.Guests)
+                    {
+                    <li>@i.User.FirstName</li>
+                    }
+                }
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>

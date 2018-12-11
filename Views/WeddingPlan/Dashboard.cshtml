@@ -1,0 +1,61 @@
+@using WeddingPlanner.Models;
+@model List<WeddingPlan>;
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<h1>Welcome to the Wedding Planner</h1>
+<a class="btn btn-success"  href="/create">NEW WEDDING</a>
+<a class="btn btn-info"  href="/logout">Logout</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Wedder One</th>
+            <th scope="col">Wedder Two</th>
+            <th scope="col">Wedding Date</th>
+            <th scope="col">Wedding Address</th>
+            <th scope="col">Guests Count</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (WeddingPlan plan in @Model)
+        {
+        <tr>
+            <td scope="col">@plan.WedderOne</td>
+            <td scope="col">@plan.WedderTwo</td>
+            <td scope="col">@plan.WeddingDate</td>
+            <td scope="col">@plan.WeddingAddress</td>
+            <td scope="col">@plan.Guests.Count</td>
+            <td scope="col">@plan.CreatorId</td>
+            <td scope="col">
+                @if(@ViewBag.UserId == @plan.CreatorId){
+                    <a class="btn btn-primary" href="/deleteplan/@plan.PlanId">Delete</a>
+                } 
+                <a class="btn btn-info" href="/detail/@plan.PlanId">Details</a>
+                @{
+                    var count = 0;
+                    foreach (var guest in @plan.Guests)
+                    {
+                        if (@ViewBag.UserId == guest.UserId)
+                        {
+                            count++;
+                        }
+                    }
+                    if (count == 0)
+                    {
+                        <a class="btn btn-success" href="/RSVP/@plan.PlanId">RSVP</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger" href="/RSVP/@plan.PlanId">UNRSVP</a>
+                    }
+                }
+            </td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>

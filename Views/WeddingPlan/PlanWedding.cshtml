@@ -1,0 +1,49 @@
+@model WeddingPlanner.Models.WeddingPlan;
+@{
+    ViewData["Title"] = "Plan Wedding";
+}
+<div class="wrapper">
+    <div class="header">
+        <h1>Plan Your Wedding: @ViewBag.UserId</h1>
+    </div>
+    <form asp-action="SubmitPlan" asp-controller="WeddingPlan" method="POST">
+        <div class="form-group">
+            <label asp-for="WedderOne" class="control-label"></label>
+            <select class="form-control" asp-for="WedderOne">
+            @{
+                foreach (var user in @ViewBag.users)
+                {
+                <option value = "@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
+                }
+            }
+            </select>
+            <span asp-validation-for="WedderOne"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="WedderTwo" class="control-label"></label>
+            <select class="form-control" asp-for="WedderTwo">
+            @{
+                foreach (var user in @ViewBag.users)
+                {
+                <option value = "@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
+                }
+            }
+            </select>
+            <span asp-validation-for="WedderTwo"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="WeddingDate" class="control-label"></label>
+            <input asp-for="WeddingDate" class="form-control" type="date">
+            <span asp-validation-for="WeddingDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="WeddingAddress" class="control-label"></label>
+            <input asp-for="WeddingAddress" class="form-control">
+            <span asp-validation-for="WeddingAddress"></span>
+        </div>
+        <div class="form-group">
+            <input type="hidden" asp-for="CreatorId" value ="@ViewBag.UserID">
+        </div>
+        <input class="btn btn-success" type="submit" />
+    </form>
+</div>
